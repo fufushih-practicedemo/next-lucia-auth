@@ -16,46 +16,38 @@ export const lucia = new Lucia(adapter, {
   }
 })
 
-export const getUser = async ()=> {
-  try {
-    const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
-    if (!sessionId) {
-      return null;
-    }
-
-    const { session, user } = await lucia.validateSession(sessionId);
-
-    if (!session) {
-      const sessionCookie = await lucia.createBlankSessionCookie();
-      cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-      return null;
-    }
-
-    if (session.fresh) {
-      // Refresh session cookie
-      const sessionCookie = await lucia.createSessionCookie(session.id);
-      cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-    }
-
-    const dbUser = await prisma.user.findUnique({
-      where: {
-        id: user.id
-      },
-      select: {
-        name: true,
-        email: true
-      }
-    });
-
-    if (!dbUser) {
-      // User not found in database, clear session
-      const sessionCookie = await lucia.createBlankSessionCookie();
-      cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-      return null;
-    }
-
-    return dbUser;
-  } catch (error) {
-    return null;
+export const getUser = async () => {
+  const sessionId = cookies().get(lucia.sessionCookieName)?.value || null
+  if (!sessionId) {
+    return null
   }
+  const { session, user } = await lucia.validateSession(sessionId)
+  try {
+    if (session && session.fresh) {
+      // refreshing their session cookie
+      const sessionCookie = await lucia.createSessionCookie(session.id)
+      cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes)
+    }
+    if (!session) {
+      const sessionCookie = await lucia.createBlankSessionCookie()
+      cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes)
+    }
+
+  } catch {
+    return null
+  }
+  const dbUser = await prisma.user.findUnique({
+    where: {
+      id: user?.id
+    },
+    select: {
+      name: true,
+      email: true,
+      picture: true
+    }
+  })
+
+  if (!dbUser) return null;
+
+  return dbUser;
 }
