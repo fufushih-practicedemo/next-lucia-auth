@@ -4,6 +4,8 @@
       "dbaeumer.vscode-eslint",
       "bradlc.vscode-tailwindcss",
       "dsznajder.es7-react-js-snippets",
-      "prisma.prisma"
+      "prisma.prisma",
+      "mtxr.sqltools",
+      "mtxr.sqltools-driver-sqlite"
   ]
 }
