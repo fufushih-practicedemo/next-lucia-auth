@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { signUp } from '@/app/auth/auth.action';
 
 export const signUpSchema = z.object({
   name: z.string().min(5),
@@ -41,7 +42,7 @@ const SignUpForm = () => {
   })
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
-    // const res = await signUp(values)
+    const res = await signUp(values);
     // if (res.success) {
     //     toast.success('Account created successfully')
     //     router.push('/dashboard')
