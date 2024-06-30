@@ -43,15 +43,12 @@ const SignUpForm = () => {
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     const res = await signUp(values);
-    // if (res.success) {
-    //     toast.success('Account created successfully')
-    //     router.push('/dashboard')
-    // } else {
-    //     toast.error(res.error)
-    // }
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+    if (res.success) {
+        toast.success('Account created successfully')
+        router.push('/dashboard')
+    } else {
+        toast.error(res.error)
+    }
   }
 
   return (
