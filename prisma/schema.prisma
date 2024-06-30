@@ -16,13 +16,14 @@ model User {
   name           String
   role           String?
   hashedPassword String?
+  picture        String?
 
   session Session[]
 }
 
 model Session {
   id        String   @id
-  expiredAt DateTime
+  expiresAt DateTime
 
   userId String
   user   User   @relation(fields: [userId], references: [id])

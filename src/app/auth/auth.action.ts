@@ -2,8 +2,10 @@
 
 import { signInSchema } from "@/components/SignInForm";
 import { signUpSchema } from "@/components/SignUpForm";
+import { googleOAuthClient } from "@/lib/googleOAuth";
 import { lucia } from "@/lib/lucia";
 import { prisma } from "@/lib/prisma";
+import { generateCodeVerifier, generateState } from "arctic";
 import bcrypt from 'bcrypt';
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -75,4 +77,35 @@ export const logOut = async () => {
   const sessionCookie = await lucia.createBlankSessionCookie()
   cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes)
   return redirect('/auth')
+}
+
+export const getGoogleOAuthConsentUrl =async () => {
+  try {
+    const state = generateState();
+    const codeVerifier = generateCodeVerifier();
+
+    cookies().set('codeVerifier', codeVerifier, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production'
+    })
+    cookies().set('state', state, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production'
+    })
+
+    const authUrl = await googleOAuthClient.createAuthorizationURL(state, codeVerifier, {
+      scopes: ['email', 'profile']
+    })
+
+    return {
+      success: true,
+      url: authUrl.toString()
+    }
+
+  } catch (error) {
+    return {
+      success: false,
+      error: 'Something went wrong'
+    }
+  }
 }

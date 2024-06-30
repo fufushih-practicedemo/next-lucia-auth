@@ -1,3 +1,4 @@
+"use client";
 import GoogleOAuthButton from "@/components/GoogleOAuthButton"
 import SignInForm from "@/components/SignInForm"
 import SignUpForm from "@/components/SignUpForm"
