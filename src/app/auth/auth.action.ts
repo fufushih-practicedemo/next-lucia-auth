@@ -1,10 +1,12 @@
 "use server";
 
+import { signInSchema } from "@/components/SignInForm";
 import { signUpSchema } from "@/components/SignUpForm";
 import { lucia } from "@/lib/lucia";
 import { prisma } from "@/lib/prisma";
 import bcrypt from 'bcrypt';
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 export const signUp = async (values: z.infer<typeof signUpSchema>) => {
@@ -39,4 +41,38 @@ export const signUp = async (values: z.infer<typeof signUpSchema>) => {
   } catch (error) {
     return { error: "Something went wrong", success: false }
   }
+}
+
+
+export const signIn = async (values: z.infer<typeof signInSchema>) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: values.email
+      }
+    });
+    if (!user || !user.hashedPassword) {
+      return { success: false, error: "Invalid Credentials!" };
+    }
+
+    const passwordMatch = await bcrypt.compare(values.password, user.hashedPassword);
+    if (!passwordMatch) {
+      return { success: false, error: "Invalid Credentials!" };
+    }
+
+    // successfully login
+    const session = await lucia.createSession(user.id, {});
+    const sessionCookie = await lucia.createSessionCookie(session.id);
+    cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: "Something went wrong" };
+  }
+}
+
+export const logOut = async () => {
+  const sessionCookie = await lucia.createBlankSessionCookie()
+  cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes)
+  return redirect('/auth')
 }

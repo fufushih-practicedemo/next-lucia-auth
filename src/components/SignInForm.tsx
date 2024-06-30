@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { signIn } from '@/app/auth/auth.action';
 
 export const signInSchema = z.object({
     email: z.string().email(),
@@ -25,7 +26,13 @@ const SignInForm = () => {
   })
 
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
-    
+    const res = await signIn(values);
+    if (res.success) {
+        toast.success('Account signin successfully')
+        router.push('/')
+    } else {
+        toast.error(res.error)
+    }
   }
 
   return (
