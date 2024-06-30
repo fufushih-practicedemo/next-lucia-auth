@@ -17,35 +17,45 @@ export const lucia = new Lucia(adapter, {
 })
 
 export const getUser = async ()=> {
-  const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
-  if(!sessionId) {
-    return null;
-  }
-
-  const { session, user } = await lucia.validateSession(sessionId);
   try {
-    if (session && session.fresh) {
-      // refreshin session cookie
-      const sessionCookie = await lucia.createSessionCookie(session.id);
-      cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
+    if (!sessionId) {
+      return null;
     }
+
+    const { session, user } = await lucia.validateSession(sessionId);
 
     if (!session) {
       const sessionCookie = await lucia.createBlankSessionCookie();
       cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+      return null;
     }
-  } catch (error) {
-    
-  }
-  const dbUser = await prisma.user.findUnique({
-    where: {
-      id: user?.id
-    },
-    select: {
-      name: true,
-      email: true
-    }
-  })
 
-  return dbUser;
+    if (session.fresh) {
+      // Refresh session cookie
+      const sessionCookie = await lucia.createSessionCookie(session.id);
+      cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    }
+
+    const dbUser = await prisma.user.findUnique({
+      where: {
+        id: user.id
+      },
+      select: {
+        name: true,
+        email: true
+      }
+    });
+
+    if (!dbUser) {
+      // User not found in database, clear session
+      const sessionCookie = await lucia.createBlankSessionCookie();
+      cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+      return null;
+    }
+
+    return dbUser;
+  } catch (error) {
+    return null;
+  }
 }
