@@ -1,6 +1,6 @@
 'use client';
 
-import { logOut } from "@/app/auth/auth.action";
+import { logOut } from "@/actions/auth";
 import { Button } from "./ui/button";
 
 interface SignOutButtonProps {

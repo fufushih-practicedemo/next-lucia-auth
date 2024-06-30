@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { RiGoogleFill } from '@remixicon/react';
-import { getGoogleOAuthConsentUrl } from '@/app/auth/auth.action';
+import { getGoogleOAuthConsentUrl } from '@/actions/auth';
 import { toast } from 'sonner';
 
 const GoogleOAuthButton = () => {

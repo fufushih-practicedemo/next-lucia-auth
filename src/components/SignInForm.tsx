@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { signIn } from '@/app/auth/auth.action';
+import { signIn } from '@/actions/auth';
 
 export const signInSchema = z.object({
   email: z.string().email(),
