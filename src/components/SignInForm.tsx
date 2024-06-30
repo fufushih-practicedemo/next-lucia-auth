@@ -36,61 +36,53 @@ const SignInForm = () => {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Sign In</CardTitle>
-        <CardDescription>
-          Sign in to your account to continue.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className='space-y-2'>
-        <Form {...form}>
-          <form className='flex flex-col gap-2' onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name='email'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='email'
-                      placeholder='Enter your email...'
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='password'
-                      placeholder="Enter your password..."
-                      {...field}
-                      onChange={(e) => {
-                        e.target.value = e.target.value.trim();
-                        field.onChange(e);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type='submit' className='self-start'>
-                Login
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+    <Form {...form}>
+      <form className='flex flex-col justify-between h-full' onSubmit={form.handleSubmit(onSubmit)}>
+        <section className='flex flex-col gap-4'>
+          <FormField
+            control={form.control}
+            name='email'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    type='email'
+                    placeholder='Enter your email...'
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type='password'
+                    placeholder="Enter your password..."
+                    {...field}
+                    onChange={(e) => {
+                      e.target.value = e.target.value.trim();
+                      field.onChange(e);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </section>
+        <Button type='submit' className='self-start'>
+          Login
+        </Button>
+      </form>
+    </Form>
   )
 }
 

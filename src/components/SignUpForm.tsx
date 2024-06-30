@@ -52,98 +52,90 @@ const SignUpForm = () => {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Sign up</CardTitle>
-        <CardDescription>
-          Sign up your account.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className='space-y-2'>
-        <Form {...form}>
-          <form className='flex flex-col gap-2' onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name='email'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='email'
-                      placeholder='Enter your email...'
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='name'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder='Enter your name...'
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='password'
-                      placeholder="Enter your password..."
-                      {...field}
-                      onChange={(e) => {
-                        e.target.value = e.target.value.trim();
-                        field.onChange(e);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='password'
-                      placeholder="Please confirm your password"
-                      {...field}
-                      onChange={(e) => {
-                        e.target.value = e.target.value.trim();
-                        field.onChange(e);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type='submit' className='self-start'>
+    <Form {...form}>
+      <form className='flex flex-col justify-between h-full' onSubmit={form.handleSubmit(onSubmit)}>
+        <section className='flex flex-col gap-4'>
+          <FormField
+            control={form.control}
+            name='email'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    type='email'
+                    placeholder='Enter your email...'
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='name'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='Enter your name...'
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type='password'
+                    placeholder="Enter your password..."
+                    {...field}
+                    onChange={(e) => {
+                      e.target.value = e.target.value.trim();
+                      field.onChange(e);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm password</FormLabel>
+                <FormControl>
+                  <Input
+                    type='password'
+                    placeholder="Please confirm your password"
+                    {...field}
+                    onChange={(e) => {
+                      e.target.value = e.target.value.trim();
+                      field.onChange(e);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </section>
+        <Button type='submit' className='self-start'>
                 Sign Up
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+        </Button>
+      </form>
+    </Form>
   )
 }
 

@@ -15,10 +15,10 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({ SignUpTabContent, SignInTabCo
         <TabsTrigger value="sign-in">Sign In</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="sign-up">
+      <TabsContent value="sign-up" className="h-[25rem]">
         {SignUpTabContent}
       </TabsContent>
-      <TabsContent value="sign-in">
+      <TabsContent value="sign-in" className="h-[25rem]">
         {SignInTabContent}
       </TabsContent>
     </Tabs>
