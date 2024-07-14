@@ -131,9 +131,12 @@ const SignUpForm = () => {
             )}
           />
         </section>
-        <Button type='submit' className='self-start'>
-                Sign Up
-        </Button>
+        
+        <div className='flex flex-col gap-2 w-full'>
+          <Button type='submit'>
+            Sign Up
+          </Button>
+        </div>
       </form>
     </Form>
   )
