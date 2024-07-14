@@ -1,4 +1,3 @@
-import SignOutButton from "@/components/SignOutButton";
 import { getUser } from "@/lib/lucia"
 import Image from "next/image";
 import { redirect } from "next/navigation";

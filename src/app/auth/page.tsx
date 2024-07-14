@@ -1,8 +1,8 @@
 "use client";
-import GoogleOAuthButton from "@/components/GoogleOAuthButton"
-import SignInForm from "@/components/SignInForm"
-import SignUpForm from "@/components/SignUpForm"
-import TabSwitcher from "@/components/TabSwitcher"
+import GoogleOAuthButton from "@/components/auth/GoogleOAuthButton"
+import SignInForm from "@/components/auth/SignInForm"
+import SignUpForm from "@/components/auth/SignUpForm"
+import AuthCard from "@/components/auth/AuthCard"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const AuthPage = () => {
@@ -17,7 +17,7 @@ const AuthPage = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <TabSwitcher SignUpTabContent={<SignUpForm />} SignInTabContent={<SignInForm />} />
+            <AuthCard SignUpTabContent={<SignUpForm />} SignInTabContent={<SignInForm />} />
             <GoogleOAuthButton />
           </CardContent>
         </Card>

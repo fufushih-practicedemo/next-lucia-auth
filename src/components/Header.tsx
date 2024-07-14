@@ -2,7 +2,7 @@ import { getUser } from '@/lib/lucia';
 import Link from 'next/link';
 import React from 'react'
 import { Button } from '@/components/ui/button';
-import SignOutButton from './SignOutButton';
+import SignOutButton from './auth/SignOutButton';
 
 const Header = async () => {
   const user = await getUser();

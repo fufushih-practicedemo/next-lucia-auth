@@ -1,7 +1,7 @@
 "use server";
 
-import { signInSchema } from "@/components/SignInForm";
-import { signUpSchema } from "@/components/SignUpForm";
+import { signInSchema } from "@/components/auth/SignInForm";
+import { signUpSchema } from "@/components/auth/SignUpForm";
 import { googleOAuthClient } from "@/lib/googleOAuth";
 import { lucia } from "@/lib/lucia";
 import { prisma } from "@/lib/prisma";
