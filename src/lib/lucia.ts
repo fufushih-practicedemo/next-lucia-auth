@@ -1,4 +1,4 @@
-// import 'server-only'; FIXME: use proper method to prevent the data leaking
+import 'server-only';
 
 import { Lucia } from 'lucia';
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";

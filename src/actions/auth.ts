@@ -1,5 +1,6 @@
 "use server";
 
+import { signInSchema, signUpSchema } from "@/lib/definitions";
 import { googleOAuthClient } from "@/lib/googleOAuth";
 import { lucia } from "@/lib/lucia";
 import { prisma } from "@/lib/prisma";
@@ -8,21 +9,6 @@ import bcrypt from 'bcrypt';
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-
-export const signInSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-})
-
-export const signUpSchema = z.object({
-  name: z.string().min(5),
-  email: z.string().email(),
-  password: z.string().min(8),
-  confirmPassword: z.string().min(8),
-}).refine(data => data.password === data.confirmPassword, {
-  message: 'Passwords do not match',
-  path: ['confirmPassword']
-})
 
 export const signUp = async (values: z.infer<typeof signUpSchema>) => {
   try {
